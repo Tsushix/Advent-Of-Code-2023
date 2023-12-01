@@ -1,9 +1,4 @@
 
-file = open("input.txt")
-
-numbers = []
-numberString = ["one","two","three","four","five","six","seven","height","nine"]
-
 def checkString(line:str,c:int,pas=1) -> str:
 
     value = ""
@@ -20,32 +15,32 @@ def checkString(line:str,c:int,pas=1) -> str:
 
     return value
 
-for line in file.readlines():
+def main() -> None:
 
-    firstValue = ""
-    lastValue = ""
+    file = open("input.txt")
+    numbers = []
 
-    for c in range(len(line)):
+    for line in file.readlines():
 
-        if line[c].isdigit():
-            firstValue = line[c]
+        firstValue = ""
+        lastValue = ""
+
+        for c in range(len(line)):
+
+            print(lastValue)
+
+            if line[c].isdigit():
+                if not firstValue: firstValue = line[c]
+                lastValue = line[c]
+            
+            elif checkString(line,c):
+                if not firstValue: firstValue = checkString(line,c)
+                lastValue = checkString(line,c)
         
-        else:
-            firstValue = checkString(line,c)
-
-
-        if firstValue: break
-    
-    for c in range(len(line)-1,-1,-1):
-
-        if line[c].isdigit():
-            lastValue = line[c]
+        numbers.append(int(firstValue+lastValue))
         
-        else:
-            lastValue = checkString(line,c,-1)
+        return numbers
 
-        if lastValue: break
-    
-    numbers.append(int(firstValue+lastValue))
+if __name__ == "main":
+    print(main())
 
-print(sum(numbers))
