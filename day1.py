@@ -1,17 +1,17 @@
 
-def checkString(line:str,c:int,pas=1) -> str:
+def checkString(line:str,c:int) -> str:
 
     value = ""
 
-    if line[c:c+3*pas:pas] == "one"[::pas]: value = "1"
-    elif line[c:c+3*pas:pas] == "two"[::pas]: value = "2"
-    elif line[c:c+5*pas:pas] == "three"[::pas]: value = "3"
-    elif line[c:c+4*pas:pas] == "four"[::pas]: value = "4"
-    elif line[c:c+4*pas:pas] == "five"[::pas]: value = "5"
-    elif line[c:c+3*pas:pas] == "six"[::pas]: value = "6"
-    elif line[c:c+5*pas:pas] == "seven"[::pas]: value = "7"
-    elif line[c:c+5*pas:pas] == "eight"[::pas]: value = "8"
-    elif line[c:c+4*pas:pas] == "nine"[::pas]: value = "9"
+    if line[c:c+3] == "one": value = "1"
+    elif line[c:c+3] == "two": value = "2"
+    elif line[c:c+5] == "three": value = "3"
+    elif line[c:c+4] == "four": value = "4"
+    elif line[c:c+4] == "five": value = "5"
+    elif line[c:c+3] == "six": value = "6"
+    elif line[c:c+5] == "seven": value = "7"
+    elif line[c:c+5] == "eight": value = "8"
+    elif line[c:c+4] == "nine": value = "9"
 
     return value
 
