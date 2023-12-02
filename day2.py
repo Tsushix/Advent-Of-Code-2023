@@ -20,15 +20,16 @@ def main() -> tuple:
 
                 count = int(data.strip().split()[0])
 
-                if "blue" in data:
-                    if count > max["blue"]: max["blue"] = count
-                    if count > 14: toAdd = False
-                elif "green" in data:
-                    if count > max["green"]: max["green"] = count
-                    if count > 13: toAdd = False
-                elif "red" in data:
-                    if count > max["red"]: max["red"] = count
-                    if count > 12: toAdd = False
+                match data:
+                    case "blue":
+                        if count > max["blue"]: max["blue"] = count
+                        if count > 14: toAdd = False
+                    case "green":
+                        if count > max["green"]: max["green"] = count
+                        if count > 13: toAdd = False
+                    case "red":
+                        if count > max["red"]: max["red"] = count
+                        if count > 12: toAdd = False
 
         file.close()
 
