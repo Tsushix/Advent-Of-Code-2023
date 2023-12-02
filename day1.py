@@ -36,6 +36,8 @@ def main() -> None:
             elif checkString(line,c):
                 if not firstValue: firstValue = checkString(line,c)
                 lastValue = checkString(line,c)
+
+        file.close()
         
         numbers.append(int(firstValue+lastValue))
         
