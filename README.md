@@ -1,4 +1,4 @@
-# Advent-Of-Code-2023
+# Advent Of Code 2023 Ranking
 
 ### Day 1:
 ##### Part 1:
