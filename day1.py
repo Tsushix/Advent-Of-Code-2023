@@ -27,8 +27,6 @@ def main() -> None:
 
         for c in range(len(line)):
 
-            print(lastValue)
-
             if line[c].isdigit():
                 if not firstValue: firstValue = line[c]
                 lastValue = line[c]
@@ -36,13 +34,13 @@ def main() -> None:
             elif checkString(line,c):
                 if not firstValue: firstValue = checkString(line,c)
                 lastValue = checkString(line,c)
-
-        file.close()
         
         numbers.append(int(firstValue+lastValue))
-        
-        return numbers
 
-if __name__ == "main":
+    file.close()
+        
+    return sum(numbers)
+
+if __name__ == "__main__":
     print(main())
 

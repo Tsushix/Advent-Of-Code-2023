@@ -20,7 +20,7 @@ def main() -> tuple:
 
                 count = int(data.strip().split()[0])
 
-                match data:
+                match data.strip().split()[1]:
                     case "blue":
                         if count > max["blue"]: max["blue"] = count
                         if count > 14: toAdd = False
@@ -31,14 +31,14 @@ def main() -> tuple:
                         if count > max["red"]: max["red"] = count
                         if count > 12: toAdd = False
 
-        file.close()
-
         gamePower.append(max["red"]*max["green"]*max["blue"])
 
         if toAdd:
             ids.append(id)
 
-        return sum(ids),sum(gamePower)
+    file.close()
 
-if __name__ == "main":
+    return sum(ids),sum(gamePower)
+
+if __name__ == "__main__":
     print(main())
