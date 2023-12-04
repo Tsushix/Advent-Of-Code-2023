@@ -15,7 +15,7 @@ def checkString(line:str,c:int) -> str:
 
     return value
 
-def main() -> None:
+def main() -> int:
 
     file = open("input.txt")
     numbers = []
