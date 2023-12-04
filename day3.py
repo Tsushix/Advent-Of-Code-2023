@@ -21,7 +21,7 @@ def checkNumberStatus(cosNumber:list,cosSymbols:list,lines:list) -> (bool,tuple)
                     if lines[coS[1]][coS[0]] == "*":
                         gear = str(coS[0])+","+str(coS[1])
                     valid = True
-                    
+
             elif coN[0]+1 == coS[0]:
 
                 if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
@@ -48,7 +48,9 @@ def main() -> (int,int):
     for y in range(width):
         for x in range(height):
 
-            if lines[y][x] in symbols: symbolsCo.append((x,y))
+            if lines[y][x] in symbols:
+                symbolsCo.append((x,y))
+                
             elif lines[y][x].isdigit():
 
                 if not len(numbersCo):
