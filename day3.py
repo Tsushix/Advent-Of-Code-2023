@@ -1,21 +1,29 @@
 
-def checkValidNumber(cosNumber:list,cosSymbols:list) -> bool:
+def checkNumberStatus(cosNumber:list,cosSymbols:list,lines:list) -> (bool,tuple):
 
     valid = False
+    gear = ""
 
-    for coN in cosNumber:
-        for coS in cosSymbols:
+    for coS in cosSymbols:
+
+        for coN in cosNumber:
 
             if coN[0]-1 == coS[0]:
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: valid = True
+                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: 
+                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    valid = True
             elif coN[0] == coS[0]:
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: valid = True
+                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
+                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    valid = True
             elif coN[0]+1 == coS[0]:
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: valid = True
-    
-    return valid
+                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
+                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    valid = True
 
-def main() -> int:
+    return valid, gear
+
+def main() -> (int,int):
 
     file = open("input.txt")
     lines = file.readlines()
@@ -26,6 +34,8 @@ def main() -> int:
     symbolsCo = []
     numbersCo = []
     numbers = []
+    gearsRatios = []
+    gears = {}
 
     for y in range(width):
         for x in range(height):
@@ -38,10 +48,25 @@ def main() -> int:
                 else: numbersCo[-1].append((x,y))
 
     for co in numbersCo:
-        if checkValidNumber(co,symbolsCo):
-            numbers.append(int("".join([ lines[y][x] for x,y in co ])))
 
-    return sum(numbers)
+        status = checkNumberStatus(co,symbolsCo,lines)
+
+        if status[0]:
+
+            numberValue = int("".join([ lines[y][x] for x,y in co ]))
+
+            if status[1]:
+                if not status[1] in gears.keys(): gears[status[1]] = []
+                gears[status[1]].append(numberValue)
+
+            numbers.append(numberValue)
+    
+    for v in gears.values():
+
+        if len(v) == 2:
+            gearsRatios.append(int(v[0]) * int(v[1]))
+
+    return sum(numbers),sum(gearsRatios)
 
 if __name__ == "__main__":
     print(main())
