@@ -49,15 +49,15 @@ def main() -> (int,int):
 
     for co in numbersCo:
 
-        status = checkNumberStatus(co,symbolsCo,lines)
+        valid,gear = checkNumberStatus(co,symbolsCo,lines)
 
-        if status[0]:
+        if valid:
 
             numberValue = int("".join([ lines[y][x] for x,y in co ]))
 
-            if status[1]:
-                if not status[1] in gears.keys(): gears[status[1]] = []
-                gears[status[1]].append(numberValue)
+            if gear:
+                if not gear in gears.keys(): gears[gear] = []
+                gears[gear].append(numberValue)
 
             numbers.append(numberValue)
     
