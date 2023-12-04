@@ -9,16 +9,24 @@ def checkNumberStatus(cosNumber:list,cosSymbols:list,lines:list) -> (bool,tuple)
         for coN in cosNumber:
 
             if coN[0]-1 == coS[0]:
+
                 if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: 
-                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    if lines[coS[1]][coS[0]] == "*":
+                        gear = str(coS[0])+","+str(coS[1])
                     valid = True
+
             elif coN[0] == coS[0]:
+
                 if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
-                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    if lines[coS[1]][coS[0]] == "*":
+                        gear = str(coS[0])+","+str(coS[1])
                     valid = True
+                    
             elif coN[0]+1 == coS[0]:
+
                 if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
-                    if lines[coS[1]][coS[0]] == "*": gear = str(coS[0])+","+str(coS[1])
+                    if lines[coS[1]][coS[0]] == "*":
+                        gear = str(coS[0])+","+str(coS[1])
                     valid = True
 
     return valid, gear
@@ -43,9 +51,14 @@ def main() -> (int,int):
             if lines[y][x] in symbols: symbolsCo.append((x,y))
             elif lines[y][x].isdigit():
 
-                if not len(numbersCo): numbersCo.append([(x,y)])
-                elif numbersCo[-1][-1] != (x-1,y): numbersCo.append([(x,y)])
-                else: numbersCo[-1].append((x,y))
+                if not len(numbersCo):
+                    numbersCo.append([(x,y)])
+
+                elif numbersCo[-1][-1] != (x-1,y):
+                    numbersCo.append([(x,y)])
+
+                else:
+                    numbersCo[-1].append((x,y))
 
     for co in numbersCo:
 
@@ -56,7 +69,8 @@ def main() -> (int,int):
             numberValue = int("".join([ lines[y][x] for x,y in co ]))
 
             if gear:
-                if not gear in gears.keys(): gears[gear] = []
+                if not gear in gears.keys():
+                    gears[gear] = []
                 gears[gear].append(numberValue)
 
             numbers.append(numberValue)
