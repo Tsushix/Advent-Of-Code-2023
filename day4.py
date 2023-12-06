@@ -12,7 +12,7 @@ def main() -> int:
 
         id,numbers = line.split(":")
         winners,own = numbers.split("|")
-        winners,own,id = winners.strip().split(), own.strip().split(),int(id.split()[1])
+        winners,own,id = winners.strip().split(), own.strip().split(), int(id.split()[1])
         matches = 0
 
         if not id in cards.keys():
@@ -22,18 +22,16 @@ def main() -> int:
 
         for n in own:
             if n in winners: matches+=1
-
-        newCards = [c for c in range(id+1, id+matches+1)]
-
-        for _ in range(cards[id]):
-            for card in newCards:
-
-                if not card in cards.keys():
-                    cards[card] = 1
-                else:
-                    cards[card] += 1
         
         games.append(2**matches//2)
+
+        for card in range(id+1, id+matches+1):
+
+            if not card in cards.keys():
+                cards[card] = cards[id]
+
+            else:
+                cards[card] += cards[id]
     
     return sum(games),sum(cards.values())
 
