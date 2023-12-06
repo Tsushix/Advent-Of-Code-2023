@@ -7,14 +7,12 @@ def main() -> (int,int):
 
     time_part_1 = file.readline().split(":")[1].split()
     distance_part_1 = file.readline().split(":")[1].split()
+    produce_part_1 = 1
 
     time_part_2 = "".join(time_part_1)
     distance_part_2 = "".join(distance_part_1)
 
     file.close()
-
-    produce_part_1 = 1
-    produce_part_2 = 0
 
     for i in range(len(time_part_1)):
 
