@@ -1,5 +1,7 @@
 
-def main() -> int:
+from math import sqrt, ceil, floor
+
+def main() -> (int,int):
 
     file = open("input.txt")
 
@@ -16,27 +18,30 @@ def main() -> int:
 
     for i in range(len(time_part_1)):
 
-        valid_distance = []
+        time,distance = time_part_1[i],distance_part_1[i]
 
-        for t in range(int(time_part_1[i])):
+        x1 = ceil((int(time) - sqrt(int(time) **2 - 4 * int(distance)))/2)
+        x2 = floor((int(time) + sqrt(int(time)**2 - 4 * int(distance)))/2)
 
-            remaining_time = int(time_part_1[i]) - t
-            distance_traveled = remaining_time * t
+        if (int(time) - x1) * x1 == float(distance):
+            x1 += 1
 
-            if distance_traveled > int(distance_part_1[i]):
-                valid_distance.append(distance_traveled)
+        if (int(time) - x2) * x2 == float(distance):
+            x2 -= 1
+                
+        produce_part_1 *= x2-x1+1
 
-        produce_part_1*=len(valid_distance)
 
-    valid_distance = []
+    x1 = ceil((int(time_part_2) - sqrt(int(time_part_2) ** 2 - 4 * int(distance_part_2)))/2)
+    x2 = floor((int(time_part_2) + sqrt(int(time_part_2) ** 2 - 4 * int(distance_part_2)))/2)
 
-    for t in range(int(time_part_2)):
+    if (int(time_part_2) - x1) * x1 == float(distance_part_2):
+        x1 += 1
+            
+    if (int(time_part_2) - x2) * x2 == float(distance_part_2):
+        x2 -= 1
 
-        remaining_time = int(time_part_2) - t
-        distance_traveled = remaining_time * t
-
-        if distance_traveled > int(distance_part_2):
-            produce_part_2 += 1
+    produce_part_2 = x2-x1+1
 
     return produce_part_1,produce_part_2
 
