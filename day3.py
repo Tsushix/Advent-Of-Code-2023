@@ -1,35 +1,34 @@
 
-def checkNumberStatus(cosNumber:list,cosSymbols:list,lines:list) -> (bool,tuple):
+def checkNumberStatus(cosNumber:list,starsCo:list) -> (bool,tuple):
 
     valid = False
     gear = ""
+    x_min,x_max = cosNumber[0][0]-1,cosNumber[-1][0]+1
+    y_min,y_max = cosNumber[0][1]-1,cosNumber[0][1]+1
 
-    for coS in cosSymbols:
+    for x in range(x_min,x_max+1):
+        for y in range(y_min,y_max+1):
 
-        for coN in cosNumber:
-
-            if coN[0]-1 == coS[0]:
-
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]: 
-                    if lines[coS[1]][coS[0]] == "*":
-                        gear = str(coS[0])+","+str(coS[1])
-                    valid = True
-
-            elif coN[0] == coS[0]:
-
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
-                    if lines[coS[1]][coS[0]] == "*":
-                        gear = str(coS[0])+","+str(coS[1])
-                    valid = True
-
-            elif coN[0]+1 == coS[0]:
-
-                if coN[1]-1 == coS[1] or coN[1] == coS[1] or coN[1]+1 == coS[1]:
-                    if lines[coS[1]][coS[0]] == "*":
-                        gear = str(coS[0])+","+str(coS[1])
-                    valid = True
+            if (x,y) in starsCo:
+                gear = str(x)+","+str(y)
+                valid = True
 
     return valid, gear
+
+def manageNumbers(numbersCo:list,starsCo:list,lines:list,numbers:list,gears:list) -> None:
+
+    valid,gear = checkNumberStatus(numbersCo,starsCo)
+
+    if valid:
+
+        numberValue = int("".join([ lines[y][x] for x,y in numbersCo ]))
+
+        if gear:
+            if not gear in gears.keys():
+                gears[gear] = []
+            gears[gear].append(numberValue)
+
+        numbers.append(numberValue)
 
 def main() -> (int,int):
 
@@ -40,7 +39,8 @@ def main() -> (int,int):
     width,height = len(lines),len(lines[0])-1
     symbols = ["+","$","*","#","@","/","%","=","&","-"]
     symbolsCo = []
-    numbersCo = []
+    starsCo = []
+    numbersCo = [(0,0)]
     numbers = []
     gearsRatios = []
     gears = {}
@@ -50,32 +50,27 @@ def main() -> (int,int):
 
             if lines[y][x] in symbols:
                 symbolsCo.append((x,y))
+
+            if lines[y][x] == "*":
+                starsCo.append((x,y))
+
+    for y in range(width):
+        for x in range(height):
                 
-            elif lines[y][x].isdigit():
+            if lines[y][x].isdigit():
 
-                if not len(numbersCo):
-                    numbersCo.append([(x,y)])
-
-                elif numbersCo[-1][-1] != (x-1,y):
-                    numbersCo.append([(x,y)])
+                if numbersCo[-1] == (x-1,y):
+                    numbersCo.append((x,y))
 
                 else:
-                    numbersCo[-1].append((x,y))
+                    numbersCo = [(x,y)]
 
-    for co in numbersCo:
+                if x+1 >= height:
+                    manageNumbers(numbersCo,starsCo,lines,numbers,gears)
 
-        valid,gear = checkNumberStatus(co,symbolsCo,lines)
-
-        if valid:
-
-            numberValue = int("".join([ lines[y][x] for x,y in co ]))
-
-            if gear:
-                if not gear in gears.keys():
-                    gears[gear] = []
-                gears[gear].append(numberValue)
-
-            numbers.append(numberValue)
+                else:
+                    if not lines[y][x+1].isdigit():
+                        manageNumbers(numbersCo,starsCo,lines,numbers,gears)         
     
     for v in gears.values():
 
