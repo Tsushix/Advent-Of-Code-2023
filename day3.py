@@ -1,5 +1,5 @@
 
-def checkNumberStatus(cosNumber:list,starsCo:list) -> (bool,tuple):
+def checkNumberStatus(cosNumber:list,symbolsCo:list,lines:list) -> (bool,tuple):
 
     valid = False
     gear = ""
@@ -9,15 +9,16 @@ def checkNumberStatus(cosNumber:list,starsCo:list) -> (bool,tuple):
     for x in range(x_min,x_max+1):
         for y in range(y_min,y_max+1):
 
-            if (x,y) in starsCo:
-                gear = str(x)+","+str(y)
+            if (x,y) in symbolsCo:
                 valid = True
-
+                if lines[y][x] == "*":
+                    gear = str(x)+","+str(y)
+                
     return valid, gear
 
-def manageNumbers(numbersCo:list,starsCo:list,lines:list,numbers:list,gears:list) -> None:
+def manageNumbers(numbersCo:list,symbolsCo:list,lines:list,numbers:list,gears:list) -> None:
 
-    valid,gear = checkNumberStatus(numbersCo,starsCo)
+    valid,gear = checkNumberStatus(numbersCo,symbolsCo,lines)
 
     if valid:
 
@@ -39,7 +40,6 @@ def main() -> (int,int):
     width,height = len(lines),len(lines[0])-1
     symbols = ["+","$","*","#","@","/","%","=","&","-"]
     symbolsCo = []
-    starsCo = []
     numbersCo = [(0,0)]
     numbers = []
     gearsRatios = []
@@ -50,9 +50,6 @@ def main() -> (int,int):
 
             if lines[y][x] in symbols:
                 symbolsCo.append((x,y))
-
-            if lines[y][x] == "*":
-                starsCo.append((x,y))
 
     for y in range(width):
         for x in range(height):
@@ -66,11 +63,11 @@ def main() -> (int,int):
                     numbersCo = [(x,y)]
 
                 if x+1 >= height:
-                    manageNumbers(numbersCo,starsCo,lines,numbers,gears)
+                    manageNumbers(numbersCo,symbolsCo,lines,numbers,gears)
 
                 else:
                     if not lines[y][x+1].isdigit():
-                        manageNumbers(numbersCo,starsCo,lines,numbers,gears)         
+                        manageNumbers(numbersCo,symbolsCo,lines,numbers,gears)         
     
     for v in gears.values():
 
@@ -80,4 +77,5 @@ def main() -> (int,int):
     return sum(numbers),sum(gearsRatios)
 
 if __name__ == "__main__":
-    print(main())
+    from AOC_utils import  executeMain
+    executeMain(main)
