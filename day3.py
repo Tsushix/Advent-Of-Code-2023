@@ -77,5 +77,4 @@ def main() -> (int,int):
     return sum(numbers),sum(gearsRatios)
 
 if __name__ == "__main__":
-    from AOC_utils import  executeMain
-    executeMain(main)
+    print(main())
